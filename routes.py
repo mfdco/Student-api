@@ -58,12 +58,11 @@ def get_students_by_major(major: str):
     
 @router.get("/students/by-gpa") # TODO: Replace ??? with correct endpoint path
 def get_students_by_gpa(min_gpa: float):
-    
-    if min_gpa < 0.0 or min_gpa > 4.0:
-        raise HTTPException(status_code = 400, detail = f"GPA must be between 0.0 and 4.0")
-    
     conn = get_connection()
     cursor = conn.cursor()
+
+    if min_gpa < 0.0 or min_gpa > 4.0:
+        raise HTTPException(status_code = 400, detail = f"GPA must be between 0.0 and 4.0")
 
     cursor.execute(f"SELECT * FROM students WHERE gpa >= {min_gpa}")
 
